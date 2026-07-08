@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Acme Solutions Partner Tracker — Mock Template</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:14px;line-height:1.6;background:#f7f8fa;color:#1f2328}
+.hdr{background:#1c3a6b;color:#fff;padding:18px 28px 14px;border-bottom:1px solid #16305a}
+.hdr h1{font-size:19px;font-weight:700}
+.hdr p{font-size:12px;opacity:.75;margin-top:2px}
+.tabs{display:flex;gap:2px;background:#1c3a6b;padding:0 28px;overflow-x:auto;flex-wrap:nowrap;align-items:stretch;border-bottom:1px solid #16305a}
+.tab-label{padding:10px 18px;font-size:13px;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;user-select:none}
+.tab-label:hover{color:#fff}
+.tab-label.active{color:#fff;border-bottom-color:#7ab8f5}
+.tab-label.nested{padding-left:28px;font-size:12px;opacity:.85;border-left:2px solid rgba(255,255,255,.2)}
+.panel{display:none;padding:26px 24px 48px;max-width:1200px;margin:0 auto}
+.panel.active{display:block}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:26px}
+.kpi{background:#fff;border:1px solid #d0d7e2;border-radius:6px;padding:12px 10px;text-align:center}
+.kpi-v{font-size:22px;font-weight:700;color:#1d57b0;line-height:1.2}
+.kpi-l{font-size:11px;color:#57606a;margin-top:3px}
+.mgr-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.mgr-card{background:#fff;border:1px solid #d0d7e2;border-radius:8px;padding:18px 20px}
+.mgr-card h3{font-size:13px;font-weight:700;color:#1d57b0;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #d0d7e2;letter-spacing:.4px;text-transform:uppercase}
+.deal-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #e5e7eb;gap:10px}
+.deal-row:last-child{border-bottom:none}
+.deal-name{font-size:13px;font-weight:600;color:#1f2328;flex:1;min-width:0}
+.deal-meta{font-size:11px;color:#57606a;margin-top:2px}
+.deal-right{text-align:right;flex:0 0 auto}
+.deal-amt{font-size:15px;font-weight:700;color:#1d57b0}
+.deal-close{font-size:11px;color:#57606a;margin-top:1px}
+.stitle{font-size:14px;font-weight:700;color:#1d57b0;margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid #d0d7e2}
+.summary{background:#eef4fb;border:1px solid #d0d7e2;border-radius:6px;padding:12px 14px;margin:0 0 14px;font-size:12px;color:#57606a}
+.mini-kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:0 0 16px}
+.mini-kpi{background:#fff;border:1px solid #d0d7e2;border-radius:6px;padding:10px;text-align:center}
+.mini-kpi .v{font-size:18px;font-weight:700;color:#1d57b0;line-height:1.1}
+.mini-kpi .l{font-size:11px;color:#57606a;margin-top:3px}
+.tw{overflow-x:auto;border-radius:6px;border:1px solid #d0d7e2;margin-bottom:20px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#dce8f7;color:#1c3a6b;font-weight:600;padding:8px 11px;text-align:left;white-space:nowrap}
+tbody tr:nth-child(even){background:#f3f7fc}
+tbody tr:hover{background:#e4eef8}
+td{padding:7px 11px;border-bottom:1px solid #e5e7eb;vertical-align:top;color:#1f2328}
+tfoot td{background:#dce8f7;color:#1c3a6b;font-weight:700;padding:8px 11px}
+.mono{font-family:"SF Mono","Fira Code",monospace;font-size:11px;color:#57606a}
+.r{text-align:right}.c{text-align:center}.b{font-weight:700}.sm{font-size:12px;color:#57606a}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap}
+.bp{background:#fef3c7;color:#92400e}.bd{background:#dbeafe;color:#1d4ed8}
+.bq{background:#dcfce7;color:#166534}.be{background:#f1f5f9;color:#475569}
+.breal{background:#dcfce7;color:#166534}.bsemi{background:#fef3c7;color:#92400e}
+.bnot{background:#fee2e2;color:#991b1b}.bcheck{background:#f1f5f9;color:#475569}
+.bbob{background:#ede9fe;color:#3730a3}.bwxd{background:#dcfce7;color:#166534}
+.borc{background:#f3e8ff;color:#6b21a8}.bcon{background:#fef9c3;color:#854d0e}
+.bsec{background:#fee2e2;color:#991b1b}.bren{background:#f1f5f9;color:#475569}
+.bmulti{background:#cffafe;color:#155e75}.bout{background:#dcfce7;color:#166534}
+.bin{background:#fef3c7;color:#92400e}.bvir{background:#dbeafe;color:#1d4ed8}
+.bip2{background:#dcfce7;color:#166534}
+.bsc{background:#dcfce7;color:#166534}.bip{background:#dbeafe;color:#1d4ed8}
+.bst{background:#fef3c7;color:#92400e}.bns{background:#fee2e2;color:#991b1b}
+.phi{color:#b91c1c;font-weight:700}.pme{color:#c2600a;font-weight:600}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.card{background:#fff;border:1px solid #d0d7e2;border-radius:6px;padding:14px 15px}
+.card .cn{font-weight:700;font-size:14px;color:#1d57b0}
+.card .cr{font-size:12px;color:#57606a;margin-bottom:5px}
+.card .cp{font-size:12px;color:#1d57b0;font-weight:600}
+.card .cre{font-size:11px;color:#57606a}
+.card .ce{font-size:11px;color:#57606a;margin-top:2px}
+.card .cnote{font-size:12px;color:#475569;margin-top:6px;padding-top:6px;border-top:1px solid #e5e7eb}
+.ms-wrap{position:relative;display:inline-block}
+.ms-btn{font-size:12px;padding:4px 28px 4px 8px;border:1px solid #d0d7e2;border-radius:4px;background:#fff;cursor:pointer;white-space:nowrap;min-width:130px;color:#1f2328;user-select:none}
+.ms-btn::after{content:"▾";position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none;color:#57606a}
+.ms-dropdown{display:none;position:absolute;top:calc(100% + 3px);left:0;background:#fff;border:1px solid #d0d7e2;border-radius:4px;box-shadow:0 4px 16px rgba(0,0,0,.1);z-index:200;min-width:160px;padding:6px 0}
+.ms-wrap.open .ms-dropdown{display:block}
+.ms-option{display:flex;align-items:center;gap:7px;padding:5px 12px;font-size:12px;cursor:pointer;color:#1f2328}
+.ms-option:hover{background:#eef4fb}
+.ms-option input{accent-color:#1d57b0;cursor:pointer}
+.ai-status-sel{font-size:11px;font-weight:600;padding:2px 22px 2px 8px;border-radius:10px;border:none;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2357606a'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;background-size:8px}
+.ai-sel-scheduled{background-color:#dcfce7;color:#166534}
+.ai-sel-inprogress{background-color:#dbeafe;color:#1d4ed8}
+.ai-sel-started{background-color:#fef3c7;color:#92400e}
+.ai-sel-notstarted{background-color:#fee2e2;color:#991b1b}
+.ai-sel-accepted{background-color:#dcfce7;color:#166534}
+.ai-sel-planning{background-color:#dbeafe;color:#1d4ed8}
+.ai-sel-done{background-color:#f1f5f9;color:#475569}
+footer{text-align:center;font-size:12px;color:#57606a;padding:18px;border-top:1px solid #d0d7e2;margin-top:8px}
+@media(max-width:900px){.mgr-grid{grid-template-columns:1fr}.kpis,.mini-kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Acme Solutions Partner Tracker — [Month Year]</h1>
+  <p>[Your Name] &nbsp;|&nbsp; Partner Technical Specialist &nbsp;|&nbsp; IBM Ecosystem</p>
+</div>
+
+<nav class="tabs">
+  <label class="tab-label lbl1 active" data-tab="p1">Dashboard</label>
+  <label class="tab-label lbl2" data-tab="p2">Pipeline</label>
+  <label class="tab-label lbl8" data-tab="p8">Growth</label>
+  <label class="tab-label lbl7" data-tab="p7">Efficiency</label>
+  <label class="tab-label lbl10" data-tab="p10">What's Working &amp; What Isn't</label>
+  <label class="tab-label lbl12 nested" data-tab="p12">↳ Evidence</label>
+  <label class="tab-label lbl3" data-tab="p3">Meeting Log</label>
+  <label class="tab-label lbl9 nested" data-tab="p9">↳ Customer Meetings</label>
+  <label class="tab-label lbl4" data-tab="p4">Email Log</label>
+  <label class="tab-label lbl5" data-tab="p5">Contacts</label>
+  <label class="tab-label lbl6" data-tab="p6">Action Items</label>
+  <label class="tab-label lbl11" data-tab="p11">Upcoming Opptys</label>
+</nav>
+
+<div class="panels">
+
+<!-- ── DASHBOARD ── -->
+<div class="panel p1 active">
+  <div class="mgr-card" style="margin-bottom:20px;">
+    <h3>Quota Progress — FY[YEAR]</h3>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;">
+      <div>
+        <div style="font-size:11px;color:#57606a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Active Pipeline (not closed)</div>
+        <div style="font-size:30px;font-weight:700;color:#1d57b0;">$[PIPELINE TOTAL]</div>
+        <div style="font-size:12px;color:#57606a;margin-top:3px;">[N] confirmed active deals · [X]% of $[QUOTA] target</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:11px;color:#57606a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Quota Target</div>
+        <div style="font-size:22px;font-weight:700;color:#1f2328;">$[QUOTA]</div>
+        <div style="font-size:11px;color:#b91c1c;font-weight:600;margin-top:2px;">$0 closed to date</div>
+      </div>
+    </div>
+    <div style="background:#4a90d9;border:1px solid #3578c0;border-radius:6px;height:28px;position:relative;overflow:hidden;">
+      <div style="width:100%;height:100%;background:repeating-linear-gradient(45deg,#4a90d9,#4a90d9 7px,#5da3e8 7px,#5da3e8 14px);opacity:.95;"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;padding-left:10px;">
+        <span style="font-size:11px;font-weight:700;color:#fff;">$[PIPELINE TOTAL] IN-FLIGHT — $0 CLOSED</span>
+      </div>
+    </div>
+    <div style="background:#eef4fb;border-left:3px solid #2a7d4f;border-radius:4px;padding:9px 12px;font-size:12px;color:#57606a;margin-top:12px;">
+      [One sentence on quota coverage — e.g. "Active pipeline already exceeds the $[QUOTA] target. If [Big Deal] closes, quota is covered in a single deal."]
+    </div>
+  </div>
+
+  <div class="mgr-grid">
+    <div class="mgr-card">
+      <h3>Big Opportunities (&gt;$50K)</h3>
+      <!-- Add deal-row divs here, one per large deal -->
+      <div class="deal-row">
+        <div class="deal-name">
+          [Account] — [Product]
+          <div class="deal-meta">[Account Name] &nbsp;·&nbsp; <span class="badge bq">Qualify</span> &nbsp;·&nbsp; <span class="badge bcon">[Product]</span></div>
+        </div>
+        <div class="deal-right">
+          <div class="deal-amt">$[VALUE]</div>
+          <div class="deal-close">Close [Month Day]</div>
+        </div>
+      </div>
+    </div>
+    <div class="mgr-card">
+      <h3>Pipeline by Stage</h3>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+        <div style="text-align:center;padding:10px;background:#f7f8fa;border-radius:6px;border:1px solid #d0d7e2;">
+          <div style="font-size:22px;font-weight:700;color:#1f2328;">[N]</div>
+          <div style="margin:4px 0;"><span class="badge bp">Propose</span></div>
+          <div style="font-size:12px;font-weight:600;color:#57606a;">$[VALUE]</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:#f7f8fa;border-radius:6px;border:1px solid #d0d7e2;">
+          <div style="font-size:22px;font-weight:700;color:#1f2328;">[N]</div>
+          <div style="margin:4px 0;"><span class="badge bd">Design</span></div>
+          <div style="font-size:12px;font-weight:600;color:#57606a;">$[VALUE]</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:#f7f8fa;border-radius:6px;border:1px solid #d0d7e2;">
+          <div style="font-size:22px;font-weight:700;color:#1f2328;">[N]</div>
+          <div style="margin:4px 0;"><span class="badge bq">Qualify</span></div>
+          <div style="font-size:12px;font-weight:600;color:#57606a;">$[VALUE]</div>
+        </div>
+        <div style="text-align:center;padding:10px;background:#f7f8fa;border-radius:6px;border:1px solid #d0d7e2;">
+          <div style="font-size:22px;font-weight:700;color:#1f2328;">[N]</div>
+          <div style="margin:4px 0;"><span class="badge be">Engage</span></div>
+          <div style="font-size:12px;font-weight:600;color:#57606a;">$[VALUE]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PIPELINE ── -->
+<div class="panel p2">
+  <div class="mini-kpis">
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Active Deals</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">At Risk</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Stalled</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Need Check</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Active / No Pay</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Coverage Risk</div></div>
+  </div>
+  <div style="display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+    <label style="font-size:12px;font-weight:600;color:#57606a;">Filter:</label>
+    <div class="ms-wrap" id="ms-product-wrap">
+      <div class="ms-btn" id="ms-product-btn">All Products</div>
+      <div class="ms-dropdown">
+        <label class="ms-option"><input type="checkbox" value="bob"> IBM Bob</label>
+        <label class="ms-option"><input type="checkbox" value="confluent"> Confluent</label>
+        <label class="ms-option"><input type="checkbox" value="security"> Security</label>
+        <label class="ms-option"><input type="checkbox" value="orchestrate"> watsonx Orchestrate</label>
+        <label class="ms-option"><input type="checkbox" value="watsonx"> watsonx.data</label>
+        <label class="ms-option"><input type="checkbox" value="renewal"> Renewal / Modernization</label>
+      </div>
+    </div>
+    <div class="ms-wrap" id="ms-stage-wrap">
+      <div class="ms-btn" id="ms-stage-btn">All Stages</div>
+      <div class="ms-dropdown">
+        <label class="ms-option"><input type="checkbox" value="Propose"> Propose</label>
+        <label class="ms-option"><input type="checkbox" value="Design"> Design</label>
+        <label class="ms-option"><input type="checkbox" value="Qualify"> Qualify</label>
+        <label class="ms-option"><input type="checkbox" value="Engage"> Engage</label>
+      </div>
+    </div>
+    <div class="ms-wrap" id="ms-reality-wrap">
+      <div class="ms-btn" id="ms-reality-btn">All Statuses</div>
+      <div class="ms-dropdown">
+        <label class="ms-option"><input type="checkbox" value="real"> Active</label>
+        <label class="ms-option"><input type="checkbox" value="semi"> At Risk</label>
+        <label class="ms-option"><input type="checkbox" value="not"> Stalled</label>
+        <label class="ms-option"><input type="checkbox" value="nopay"> No Pay</label>
+        <label class="ms-option"><input type="checkbox" value="check"> Need Check</label>
+      </div>
+    </div>
+    <label style="font-size:12px;font-weight:600;color:#57606a;margin-left:8px;">Sort by $:</label>
+    <select id="pip-sort" style="font-size:12px;padding:4px 8px;border:1px solid #e5e7eb;border-radius:4px;background:#fff;">
+      <option value="desc">High → Low</option>
+      <option value="asc">Low → High</option>
+    </select>
+  </div>
+  <div class="tw"><table id="pip-table">
+    <thead><tr><th>Opp ID</th><th>Opportunity</th><th>Account</th><th>Product</th><th>Status</th><th>$</th><th>Stage</th><th>Close</th><th>Owner</th><th>Notes</th></tr></thead>
+    <tbody>
+      <!-- EXAMPLE ROW — replace with your data -->
+      <tr data-product="bob" data-stage="Qualify" data-reality="real" data-total="25000">
+        <td class="mono">OPP-001</td>
+        <td class="b">Acme Headquarters — IBM Bob</td>
+        <td>Acme Corp</td>
+        <td><span class="badge bbob">IBM Bob</span></td>
+        <td><span class="badge breal">Active</span></td>
+        <td class="r b">$25,000</td>
+        <td><span class="badge bq">Qualify</span></td>
+        <td>2026-09-30</td>
+        <td>Jane Smith (AE)</td>
+        <td class="sm">Demo delivered. AE following up on quote.</td>
+      </tr>
+      <tr data-product="confluent" data-stage="Design" data-reality="real" data-total="120000">
+        <td class="mono">OPP-002</td>
+        <td class="b">GlobalBank — Confluent Cloud</td>
+        <td>GlobalBank NA</td>
+        <td><span class="badge bcon">Confluent</span></td>
+        <td><span class="badge breal">Active</span></td>
+        <td class="r b">$120,000</td>
+        <td><span class="badge bd">Design</span></td>
+        <td>2026-11-15</td>
+        <td>Mike Torres (AE)</td>
+        <td class="sm">MSK replacement angle. In-person meeting done.</td>
+      </tr>
+      <tr data-product="orchestrate" data-stage="Engage" data-reality="not" data-total="18000">
+        <td class="mono">OPP-003</td>
+        <td class="b">RetailCo — watsonx Orchestrate</td>
+        <td>RetailCo Inc.</td>
+        <td><span class="badge borc">Orchestrate</span></td>
+        <td><span class="badge bnot">Stalled</span></td>
+        <td class="r b">$18,000</td>
+        <td><span class="badge be">Engage</span></td>
+        <td>2026-10-01</td>
+        <td>Jane Smith (AE)</td>
+        <td class="sm">Came from event. AE hasn't qualified. Seller guarded on account.</td>
+      </tr>
+    </tbody>
+    <tfoot><tr><td colspan="5" class="b">TOTAL</td><td class="r">$163,000</td><td colspan="4"></td></tr></tfoot>
+  </table></div>
+</div>
+
+<!-- ── GROWTH ── -->
+<div class="panel p8">
+  <div class="summary">This tab shows how the partnership has evolved over time — comparing an earlier period to today across meetings, pipeline, and relationship depth.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+    <div class="mgr-card">
+      <h3>Before (Period 1)</h3>
+      <p class="sm">[Describe where the partnership was at the start — pipeline total, contacts engaged, key activities run, gaps visible]</p>
+    </div>
+    <div class="mgr-card">
+      <h3>Now (Period 2)</h3>
+      <p class="sm">[Describe where the partnership is today — pipeline total, contacts engaged, demos run, evidence of partner capability building]</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── EFFICIENCY ── -->
+<div class="panel p7">
+  <div class="summary">Where your time is going vs. where the revenue is — and specific changes to close more deals.</div>
+  <div class="stitle">Time vs. Revenue Scorecard</div>
+  <div class="tw"><table>
+    <thead><tr><th>Activity Type</th><th>% Time Est.</th><th>Revenue Linked</th><th>ROI Signal</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="b">Customer demos</td><td class="c">~15%</td><td class="r">$[VALUE]</td><td style="color:#2D6A4F;font-weight:700;">High</td><td class="sm">Keep — every demo has produced a named opportunity.</td></tr>
+      <tr><td class="b">Enablement sessions</td><td class="c">~18%</td><td class="r">Indirect</td><td style="color:#E76F00;font-weight:700;">Medium</td><td class="sm">Shift format — replace recurring internal sessions with co-sell calls once knowledge is built.</td></tr>
+      <tr><td class="b">Architecture research / reports</td><td class="c">~12%</td><td class="r">Indirect</td><td style="color:#E76F00;font-weight:700;">Medium</td><td class="sm">Gate it — only build reports when a partner AE commits to owning the follow-up.</td></tr>
+      <tr><td class="b">Events</td><td class="c">~14%</td><td class="r">Lead gen</td><td style="color:#2D6A4F;font-weight:700;">High</td><td class="sm">Keep — best multi-account coverage per day. Require partner AE follow-up as condition.</td></tr>
+      <tr><td class="b">Pipeline / planning calls</td><td class="c">~10%</td><td class="r">Coordination</td><td style="color:#E76F00;font-weight:700;">Medium</td><td class="sm">Monthly is sufficient unless a deal is hot.</td></tr>
+      <tr><td class="b">Admin / quoting friction</td><td class="c">~8%</td><td class="r">Negative</td><td style="color:#C0392B;font-weight:700;">Drag</td><td class="sm">Escalate deal reg denials structurally — not reactively.</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ── WHAT'S WORKING ── -->
+<div class="panel p10">
+  <div style="background:#1c3a6b;color:#fff;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:13px;line-height:1.7;">
+    <strong>Goal: make [PARTNER NAME] a self-sufficient IBM Data &amp; AI reseller.</strong> That means partner sellers sourcing and closing IBM deals, engineers demoing independently, and AEs owning follow-through — not you filling in those gaps.
+  </div>
+  <div style="background:#f3f0fb;border:1px solid #c4b5fd;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:13px;line-height:1.8;">
+    <strong>Run <code>prompts/04-interpret-whats-working.md</code> in Bob (IBM VAR Channel Strategist mode) to generate this section.</strong> Paste your pipeline, meeting log, email log, usage data, and action items into that prompt. Bob will produce an honest, evidence-backed diagnosis distinguishing your inputs from your partner's follow-through.
+  </div>
+</div>
+
+<!-- ── EVIDENCE ── -->
+<div class="panel p12">
+  <div class="summary">Run prompts/04-interpret-whats-working.md to generate the evidence tables for this tab.</div>
+</div>
+
+<!-- ── MEETING LOG ── -->
+<div class="panel p3">
+  <div class="summary">Every significant meeting logged. Filter by topic or type to isolate enablement sessions, customer demos, pipeline calls, or events.</div>
+  <div class="mini-kpis">
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Total Meetings</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Customer-Facing</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Enablement Sessions</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">In Person</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Virtual</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Events</div></div>
+  </div>
+  <div style="display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+    <label style="font-size:12px;font-weight:600;color:#57606a;">Topic:</label>
+    <select id="mtg-topic" style="font-size:12px;padding:4px 8px;border:1px solid #e5e7eb;border-radius:4px;background:#fff;">
+      <option value="">All Topics</option>
+      <option value="Bob">IBM Bob</option>
+      <option value="Confluent">Confluent</option>
+      <option value="Pipeline">Pipeline</option>
+      <option value="Enablement">Enablement</option>
+      <option value="Event">Event</option>
+      <option value="Relationship">Relationship</option>
+      <option value="Marketing">Marketing</option>
+    </select>
+    <label style="font-size:12px;font-weight:600;color:#57606a;">Type:</label>
+    <select id="mtg-type" style="font-size:12px;padding:4px 8px;border:1px solid #e5e7eb;border-radius:4px;background:#fff;">
+      <option value="">All Types</option>
+      <option value="Virtual">Virtual</option>
+      <option value="In Person">In Person</option>
+    </select>
+  </div>
+  <div class="tw"><table id="mtg-table">
+    <thead><tr><th>Date</th><th>Meeting</th><th>Topic</th><th>Attendees</th><th>Type</th><th>Notes</th></tr></thead>
+    <tbody>
+      <!-- EXAMPLE ROW -->
+      <tr data-topic="Bob" data-type="Virtual">
+        <td>2026-05-15</td>
+        <td class="b">IBM Bob Demo — Acme Headquarters</td>
+        <td><span class="badge bbob">Bob</span></td>
+        <td class="sm">Jane Smith (AE), Acme Dev Team (4 attendees)</td>
+        <td><span class="badge bvir">Virtual</span></td>
+        <td class="sm">1-hour demo. Strong interest from lead developer. Opp registered same day.</td>
+      </tr>
+      <tr data-topic="Enablement" data-type="Virtual">
+        <td>2026-05-22</td>
+        <td class="b">Agentic Enablement Session #2</td>
+        <td><span class="badge bmulti">Enablement</span></td>
+        <td class="sm">Bob Chen, Alice Park, Dave Torres (engineers)</td>
+        <td><span class="badge bvir">Virtual</span></td>
+        <td class="sm">Hands-on Orchestrate lab. 3 engineers built their first agent.</td>
+      </tr>
+      <tr data-topic="Event" data-type="In Person">
+        <td>2026-06-10</td>
+        <td class="b">IBM Data &amp; AI Client Event — Chicago</td>
+        <td><span class="badge bmulti">Event</span></td>
+        <td class="sm">28 clients from 15 companies</td>
+        <td><span class="badge bip2">In Person</span></td>
+        <td class="sm">You presented. Near-perfect attendance. Zero follow-up meetings logged by any partner AE post-event.</td>
+      </tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ── CUSTOMER MEETINGS ── -->
+<div class="panel p9">
+  <div class="summary">Isolated view of customer-facing meetings — sessions where a named end-user customer attended. Use this to answer: how much of my time is customer-facing vs. partner-facing?</div>
+  <div class="tw"><table>
+    <thead><tr><th>Date</th><th>Meeting</th><th>Customer</th><th>Motion</th><th>Type</th><th>Commercial Read</th></tr></thead>
+    <tbody>
+      <tr><td>2026-05-15</td><td class="b">IBM Bob Demo — Acme HQ</td><td>Acme Corp</td><td>IBM Bob</td><td>Virtual</td><td class="sm">Direct customer demo → opp registered</td></tr>
+      <tr><td>2026-06-10</td><td class="b">Chicago Client Event</td><td>28 clients from 15 companies</td><td>Data &amp; AI Event</td><td>In Person</td><td class="sm">Broad customer exposure — no AE follow-up</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ── EMAIL LOG ── -->
+<div class="panel p4">
+  <div class="summary">Key email threads logged. Focus on threads where something was delivered or initiated — not routine scheduling.</div>
+  <div class="mini-kpis">
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Threads Logged</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Outbound</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Inbound</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Accounts Touched</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Research / Assessments</div></div>
+    <div class="mini-kpi"><div class="v">[N]</div><div class="l">Demo / Meeting Created</div></div>
+  </div>
+  <div style="display:flex;gap:12px;margin-bottom:14px;">
+    <label style="font-size:12px;font-weight:600;color:#57606a;">Filter by Topic:</label>
+    <select id="email-topic" style="font-size:12px;padding:4px 8px;border:1px solid #e5e7eb;border-radius:4px;background:#fff;">
+      <option value="">All Topics</option>
+      <option value="bob">IBM Bob</option>
+      <option value="confluent">Confluent</option>
+      <option value="research">Research</option>
+      <option value="event">Event</option>
+      <option value="pipeline">Pipeline</option>
+      <option value="renewal">Renewal</option>
+    </select>
+  </div>
+  <div class="tw"><table id="email-table">
+    <thead><tr><th>Date</th><th>Subject / Thread</th><th>Topic</th><th>Key Contacts</th><th>Direction</th><th>Summary</th></tr></thead>
+    <tbody>
+      <tr data-etopic="bob"><td>2026-05-14</td><td class="b">IBM Bob Demo Invite — Acme HQ</td><td><span class="badge bbob">IBM Bob</span></td><td class="sm">Jane Smith, Acme Dev Lead</td><td><span class="badge bout">Outbound</span></td><td class="sm">Sent demo invite. Acme confirmed 4 attendees.</td></tr>
+      <tr data-etopic="research"><td>2026-06-05</td><td class="b">RetailCo AI Architecture Assessment</td><td><span class="badge bmulti">Research</span></td><td class="sm">Alice Park (AE), RetailCo CTO</td><td><span class="badge bout">Outbound</span></td><td class="sm">Full IBM Data &amp; AI architecture assessment sent. Alice confirmed receipt. No follow-up meeting scheduled.</td></tr>
+      <tr data-etopic="confluent"><td>2026-06-12</td><td class="b">GlobalBank — Confluent MSK Replacement</td><td><span class="badge bcon">Confluent</span></td><td class="sm">Mike Torres, GlobalBank Kafka team</td><td><span class="badge bout">Outbound</span></td><td class="sm">Initiated connection between IBM Confluent specialist and Mike Torres. Deal advanced to in-person meeting.</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ── CONTACTS ── -->
+<div class="panel p5">
+  <div class="cgrid">
+    <div class="card">
+      <div class="cn">Jane Smith</div>
+      <div class="cr">Account Executive · Sales</div>
+      <div class="cp">IBM Bob / Orchestrate</div>
+      <div class="cre">Northeast Region · Last touch: Jun 2026 · <span class="phi">High</span></div>
+      <div class="ce">jane.smith@acmesolutions.com</div>
+      <div class="cnote">Champion for IBM Bob. Driving Acme HQ deal. Has run one demo with IBM support.</div>
+    </div>
+    <div class="card">
+      <div class="cn">Mike Torres</div>
+      <div class="cr">Account Executive · Sales</div>
+      <div class="cp">Confluent</div>
+      <div class="cre">West Region · Last touch: Jun 2026 · <span class="phi">High</span></div>
+      <div class="ce">mike.torres@acmesolutions.com</div>
+      <div class="cnote">Driving GlobalBank Confluent deal. Has IBM Confluent specialist connected directly.</div>
+    </div>
+    <div class="card">
+      <div class="cn">Bob Chen</div>
+      <div class="cr">Solutions Architect · Technical</div>
+      <div class="cp">IBM Bob / Orchestrate ADK</div>
+      <div class="cre">Midwest Region · Last touch: May 2026 · <span class="phi">High</span></div>
+      <div class="ce">bob.chen@acmesolutions.com</div>
+      <div class="cnote">Regular enablement attendee. Built 2 agents in Orchestrate. Has not run a customer demo independently yet.</div>
+    </div>
+    <div class="card">
+      <div class="cn">Sarah Reeves</div>
+      <div class="cr">VP Sales · Sales Executive</div>
+      <div class="cp">IBM Practice Strategy</div>
+      <div class="cre">Global · Last touch: Apr 2026 · <span class="pme">Med</span></div>
+      <div class="ce">sarah.reeves@acmesolutions.com</div>
+      <div class="cnote">VP Sales. Met at NSM. Has not directed any AEs to pursue IBM pipeline. Key executive conversation needed.</div>
+    </div>
+    <div class="card">
+      <div class="cn">David Park</div>
+      <div class="cr">CTO · Technical Exec</div>
+      <div class="cp">Agentic AI / Bob-A-Thons</div>
+      <div class="cre">Global · Last touch: May 2026 · <span class="pme">Med</span></div>
+      <div class="ce">david.park@acmesolutions.com</div>
+      <div class="cnote">CTO. Listed as Bob-A-Thon strategy lead. Has never logged into Orchestrate. Executive buy-in gap.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ACTION ITEMS ── -->
+<div class="panel p6">
+  <div style="display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+    <label style="font-size:12px;font-weight:600;color:#57606a;">Filter by Status:</label>
+    <select id="ai-status" style="font-size:12px;padding:4px 8px;border:1px solid #e5e7eb;border-radius:4px;background:#fff;">
+      <option value="">All Statuses</option>
+      <option value="Scheduled">Scheduled</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Started">Started</option>
+      <option value="Not Started">Not Started</option>
+      <option value="Accepted">Accepted</option>
+      <option value="Planning">Planning</option>
+      <option value="Done">Done</option>
+    </select>
+  </div>
+  <div class="tw"><table id="ai-table">
+    <thead><tr><th>Contact / Account</th><th>Owner</th><th>Action</th><th>Status</th><th>Priority</th><th>Due Date</th></tr></thead>
+    <tbody>
+      <tr data-astatus="In Progress"><td class="b">Mike Torres / GlobalBank</td><td>You</td><td>Confirm July in-person meeting date with Confluent team</td><td><select class="ai-status-sel ai-sel-inprogress" data-row-status><option>Scheduled</option><option selected>In Progress</option><option>Started</option><option>Not Started</option><option>Accepted</option><option>Planning</option><option>Done</option></select></td><td><span class="phi">High</span></td><td>2026-07-10</td></tr>
+      <tr data-astatus="Not Started"><td class="b">Sarah Reeves (VP Sales)</td><td>You</td><td>Executive conversation: does Acme Solutions want an IBM AI practice?</td><td><select class="ai-status-sel ai-sel-notstarted" data-row-status><option>Scheduled</option><option>In Progress</option><option>Started</option><option selected>Not Started</option><option>Accepted</option><option>Planning</option><option>Done</option></select></td><td><span class="phi">High</span></td><td>2026-07-15</td></tr>
+      <tr data-astatus="Not Started"><td class="b">David Park (CTO)</td><td>You</td><td>Get CTO logged into Orchestrate — first agent build session</td><td><select class="ai-status-sel ai-sel-notstarted" data-row-status><option>Scheduled</option><option>In Progress</option><option>Started</option><option selected>Not Started</option><option>Accepted</option><option>Planning</option><option>Done</option></select></td><td><span class="phi">High</span></td><td>2026-07-15</td></tr>
+      <tr data-astatus="In Progress"><td class="b">Jane Smith / Acme HQ</td><td>You</td><td>Close IBM Bob quote — follow up on pricing questions</td><td><select class="ai-status-sel ai-sel-inprogress" data-row-status><option>Scheduled</option><option selected>In Progress</option><option>Started</option><option>Not Started</option><option>Accepted</option><option>Planning</option><option>Done</option></select></td><td><span class="phi">High</span></td><td>2026-07-08</td></tr>
+      <tr data-astatus="Started"><td class="b">Bob Chen</td><td>You</td><td>Transfer next demo to Bob Chen — you in backup role</td><td><select class="ai-status-sel ai-sel-started" data-row-status><option>Scheduled</option><option>In Progress</option><option selected>Started</option><option>Not Started</option><option>Accepted</option><option>Planning</option><option>Done</option></select></td><td><span class="pme">Med</span></td><td>2026-07-30</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ── UPCOMING OPPTYS ── -->
+<div class="panel p11">
+  <div class="summary">Active accounts with the most near-term potential — detailed view of where each one stands and what needs to happen next.</div>
+
+  <div style="margin-bottom:28px;">
+    <div class="stitle">GlobalBank — Confluent Cloud MSK Replacement</div>
+    <div class="mini-kpis" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px;">
+      <div class="mini-kpi"><div class="v">$120,000</div><div class="l">Opp Value</div></div>
+      <div class="mini-kpi"><div class="v">Design</div><div class="l">Stage</div></div>
+      <div class="mini-kpi"><div class="v">Active</div><div class="l">Status</div></div>
+      <div class="mini-kpi"><div class="v">Nov 15</div><div class="l">Close Target</div></div>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th>Topic</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td class="b">Product</td><td><span class="badge bcon">Confluent</span></td></tr>
+        <tr><td class="b">Status</td><td class="sm">Active — Mike Torres (AE) is engaged and driving. IBM Confluent specialist connected directly. MSK → Confluent migration is the primary angle.</td></tr>
+        <tr><td class="b">Last Touch</td><td class="sm">In-person meeting June 23 at IBM office. Full Confluent + Acme + GlobalBank team aligned.</td></tr>
+        <tr><td class="b">Opportunity Owner</td><td class="sm">Mike Torres (Acme Solutions AE)</td></tr>
+        <tr><td class="b">Next Step</td><td class="sm">Confirm July 8–9 follow-up meeting. Mike to advance deal registration in MySA.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div style="margin-bottom:28px;">
+    <div class="stitle">Acme HQ — IBM Bob</div>
+    <div class="mini-kpis" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px;">
+      <div class="mini-kpi"><div class="v">$25,000</div><div class="l">Opp Value</div></div>
+      <div class="mini-kpi"><div class="v">Qualify</div><div class="l">Stage</div></div>
+      <div class="mini-kpi"><div class="v">Active</div><div class="l">Status</div></div>
+      <div class="mini-kpi"><div class="v">Sep 30</div><div class="l">Close Target</div></div>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th>Topic</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td class="b">Product</td><td><span class="badge bbob">IBM Bob</span></td></tr>
+        <tr><td class="b">Status</td><td class="sm">Active — demo delivered May 15. Strong developer interest. Quote in progress.</td></tr>
+        <tr><td class="b">Last Touch</td><td class="sm">Demo session May 15. Follow-up quote thread initiated May 27.</td></tr>
+        <tr><td class="b">Opportunity Owner</td><td class="sm">Jane Smith (Acme Solutions AE)</td></tr>
+        <tr><td class="b">Next Step</td><td class="sm">Close pricing questions. Jane to register deal in MySA by July 8.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+</div><!-- /.panels -->
+
+<footer>Made with IBM Bob</footer>
+
+<script>
+// Tab switching
+const labels=[...document.querySelectorAll('.tab-label')];
+const panels=[...document.querySelectorAll('.panel')];
+labels.forEach(label=>label.addEventListener('click',()=>{
+  const tab=label.dataset.tab;
+  labels.forEach(l=>l.classList.toggle('active',l===label));
+  panels.forEach(panel=>panel.classList.toggle('active',panel.classList.contains(tab)));
+}));
+
+// Multi-select dropdowns
+document.querySelectorAll('.ms-wrap').forEach(wrap=>{
+  wrap.querySelector('.ms-btn').addEventListener('click',e=>{
+    e.stopPropagation();
+    document.querySelectorAll('.ms-wrap').forEach(w=>{ if(w!==wrap) w.classList.remove('open'); });
+    wrap.classList.toggle('open');
+  });
+});
+document.addEventListener('click',()=>document.querySelectorAll('.ms-wrap').forEach(w=>w.classList.remove('open')));
+document.querySelectorAll('.ms-dropdown').forEach(d=>d.addEventListener('click',e=>e.stopPropagation()));
+
+// Pipeline filter + sort
+function getChecked(wrapId){return [...document.querySelectorAll('#'+wrapId+' input:checked')].map(i=>i.value);}
+function updateBtnLabel(wrapId,btnId,allLabel){
+  const checked=getChecked(wrapId);
+  document.getElementById(btnId).textContent=checked.length===0?allLabel:checked.join(', ');
+}
+function applyPipeline(){
+  const prods=getChecked('ms-product-wrap');
+  const stages=getChecked('ms-stage-wrap');
+  const reals=getChecked('ms-reality-wrap');
+  const sortDir=document.getElementById('pip-sort').value;
+  const tbody=document.querySelector('#pip-table tbody');
+  const rows=[...tbody.querySelectorAll('tr')];
+  rows.forEach(r=>{
+    const show=(!prods.length||prods.includes(r.dataset.product||''))&&
+               (!stages.length||stages.includes(r.dataset.stage||''))&&
+               (!reals.length||reals.includes(r.dataset.reality||''));
+    r.style.display=show?'':'none';
+  });
+  const visible=rows.filter(r=>r.style.display!=='none');
+  visible.sort((a,b)=>{
+    const av=parseInt(a.dataset.total||'0',10);
+    const bv=parseInt(b.dataset.total||'0',10);
+    return sortDir==='asc'?av-bv:bv-av;
+  });
+  visible.forEach(r=>tbody.appendChild(r));
+}
+document.querySelectorAll('#ms-product-wrap input').forEach(cb=>cb.addEventListener('change',()=>{updateBtnLabel('ms-product-wrap','ms-product-btn','All Products');applyPipeline();}));
+document.querySelectorAll('#ms-stage-wrap input').forEach(cb=>cb.addEventListener('change',()=>{updateBtnLabel('ms-stage-wrap','ms-stage-btn','All Stages');applyPipeline();}));
+document.querySelectorAll('#ms-reality-wrap input').forEach(cb=>cb.addEventListener('change',()=>{updateBtnLabel('ms-reality-wrap','ms-reality-btn','All Statuses');applyPipeline();}));
+document.getElementById('pip-sort').addEventListener('change',applyPipeline);
+applyPipeline();
+
+// Meeting log filter
+function filterMeetings(){
+  const topic=document.getElementById('mtg-topic').value;
+  const type=document.getElementById('mtg-type').value;
+  document.querySelectorAll('#mtg-table tbody tr').forEach(r=>{
+    r.style.display=(!topic||r.dataset.topic===topic)&&(!type||r.dataset.type===type)?'':'none';
+  });
+}
+document.getElementById('mtg-topic').addEventListener('change',filterMeetings);
+document.getElementById('mtg-type').addEventListener('change',filterMeetings);
+
+// Email log filter
+document.getElementById('email-topic').addEventListener('change',function(){
+  const val=this.value;
+  document.querySelectorAll('#email-table tbody tr').forEach(r=>{
+    r.style.display=(!val||r.dataset.etopic===val)?'':'none';
+  });
+});
+
+// Action items: top filter
+document.getElementById('ai-status').addEventListener('change',function(){
+  const val=this.value;
+  document.querySelectorAll('#ai-table tbody tr').forEach(r=>{
+    r.style.display=(!val||r.dataset.astatus===val)?'':'none';
+  });
+});
+
+// Action items: inline status selects
+const statusClassMap={
+  'Scheduled':'ai-sel-scheduled','In Progress':'ai-sel-inprogress',
+  'Started':'ai-sel-started','Not Started':'ai-sel-notstarted',
+  'Accepted':'ai-sel-accepted','Planning':'ai-sel-planning','Done':'ai-sel-done'
+};
+document.querySelectorAll('[data-row-status]').forEach(sel=>{
+  sel.addEventListener('change',function(){
+    const row=this.closest('tr');
+    const newVal=this.value;
+    row.dataset.astatus=newVal;
+    Object.values(statusClassMap).forEach(c=>this.classList.remove(c));
+    if(statusClassMap[newVal]) this.classList.add(statusClassMap[newVal]);
+    const filterVal=document.getElementById('ai-status').value;
+    if(filterVal) row.style.display=(newVal===filterVal)?'':'none';
+  });
+});
+</script>
+</body>
+</html>
