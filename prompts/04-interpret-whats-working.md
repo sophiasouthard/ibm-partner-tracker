@@ -104,7 +104,7 @@ These will sharpen the output:
    partner sellers, that's a structural problem worth naming explicitly.
 
 2. **Have any partner engineers run a customer demo independently?** If not, say so.
-   "No Technologent engineer has run a demo without me present" is a specific, falsifiable claim.
+   "No [PARTNER NAME] engineer has run a demo without me present" is a specific, falsifiable claim.
 
 3. **Has your partner's VP Sales ever directed their AEs to follow up on an IBM lead?**
    If you've never seen that happen, it's the most important thing to surface.

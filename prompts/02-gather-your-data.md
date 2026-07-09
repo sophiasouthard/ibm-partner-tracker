@@ -67,7 +67,7 @@ Pull my Outlook calendar from [START DATE e.g. 2026-04-01] to [END DATE e.g. 202
 using the Graph API and format it as a meeting log for my partner tracker.
 
 My partner is: [PARTNER NAME]
-Their email domain is: [e.g. technologent.com]
+Their email domain is: [e.g. acmesolutions.com]
 My IBM colleagues are at: ibm.com and all *.ibm.com subdomains
 My distributor is: [e.g. Arrow — arrow.com / Ingram Micro — ingrammicro.com]
 
@@ -133,7 +133,7 @@ Format the output as a markdown table.
 Pull my sent emails from [START DATE e.g. 2026-04-01] to [END DATE e.g. 2026-07-09]
 using the Graph API (me/mailFolders/sentItems/messages).
 
-My partner is: [PARTNER NAME] — domain [e.g. technologent.com]
+My partner is: [PARTNER NAME] — domain [e.g. acmesolutions.com]
 Focus on emails related to this partner or to IBM products (Bob, Confluent, watsonx,
 Orchestrate, Guardium, Db2, etc.).
 
@@ -225,5 +225,5 @@ Keep them in a single Bob conversation thread — you'll paste all four into the
 
 **If you used the M365 live-pull prompts (2B-Live / 2C-Live):** The attendee classification
 is already done. When you reach Step 3, you can ask Bob to also highlight in the meeting log
-which meetings had **no Technologent attendees** (IBM-only meetings) vs. which had genuine
+which meetings had **no [PARTNER NAME] attendees** (IBM-only meetings) vs. which had genuine
 partner participation — this is useful context for the Step 4 diagnosis.

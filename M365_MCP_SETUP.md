@@ -138,7 +138,7 @@ Bob resolves attendee org from email domain automatically:
 | Domain pattern | Classification |
 |---|---|
 | `@ibm.com`, `@*.ibm.com`, `@us.ibm.com` | IBM |
-| `@[partnerdomain].com` | Partner (Technologent, etc.) |
+| `@[partnerdomain].com` | Partner |
 | `@arrow.com`, `@ingrammicro.com` | Distributor |
 | Everything else | External / Customer |
 
