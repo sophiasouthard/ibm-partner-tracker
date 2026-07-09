@@ -38,9 +38,11 @@ See [`PREREQUISITES.md`](./PREREQUISITES.md) for detail on each.
 - [ ] **IBM VAR Channel Strategist mode** — install from [`.bob/custom_modes.yaml`](./.bob/custom_modes.yaml)
 - [ ] **Tavily MCP** — connected and working in Bob (for partner research)
 - [ ] **IBM Data & AI Docs MCP** — connected (for IBM product positioning)
+- [ ] **M365 MCP** — recommended; connects Bob to your Outlook calendar and email via Graph API.
+     See [`M365_MCP_SETUP.md`](./M365_MCP_SETUP.md). Replaces manual calendar/email export.
 - [ ] **Your opportunity data** — exported from Salesforce/SFDC as CSV or Excel
-- [ ] **Your meeting log** — calendar export or manual log covering the last 90 days
-- [ ] **Your email log** — key threads and summaries (does not need to be exhaustive)
+- [ ] **Your meeting log** — pulled live via M365 MCP *or* manual export (last 90 days)
+- [ ] **Your email log** — pulled live via M365 MCP *or* manual key threads (last 90 days)
 - [ ] **Your quota** — your FY target number from your manager
 - [ ] **Partner usage data** (optional but high-value) — Bob/Orchestrate builder provisioning report,
      watsonx Orchestrate DAU chart if available
@@ -59,8 +61,11 @@ industries they cover, distributor (Arrow or direct), and any recent news.
 ### Step 2 — Gather and format your data
 Follow the instructions in [`prompts/02-gather-your-data.md`](./prompts/02-gather-your-data.md).
 
-You'll paste or upload your opportunity export, meeting log, email log, and quota.
-Bob will help you structure each into the format the tracker expects.
+If you have **M365 MCP connected**, Bob will pull your calendar and sent mail directly from
+Microsoft 365 — skip the manual export steps and use the live-pull prompts instead.
+
+If you don't have M365 MCP, you'll paste or upload your opportunity export, meeting log,
+email log, and quota. Bob will help you structure each into the format the tracker expects.
 
 ### Step 3 — Build the tracker
 Run the prompt in [`prompts/03-build-the-tracker.md`](./prompts/03-build-the-tracker.md).
@@ -98,15 +103,18 @@ executive conversation.
 ibm-partner-tracker/
 ├── README.md                          ← You are here
 ├── PREREQUISITES.md                   ← What you need before you start
+├── M365_MCP_SETUP.md                  ← How to connect Bob to Outlook calendar + email
 ├── prompts/
 │   ├── 01-research-your-partner.md   ← Tavily research prompt
-│   ├── 02-gather-your-data.md        ← Data formatting prompt
+│   ├── 02-gather-your-data.md        ← Data formatting prompt (with live M365 pull option)
 │   ├── 03-build-the-tracker.md       ← Tracker generation prompt
 │   └── 04-interpret-whats-working.md ← Diagnosis prompt
 ├── mock-data/
 │   └── partner-tracker-template.html ← Full mock tracker (Acme Corp)
+├── m365-mcp/                          ← Custom MCP server — reads Graph API token from token.txt
 └── .bob/
-    └── custom_modes.yaml             ← IBM VAR Channel Strategist mode
+    ├── custom_modes.yaml             ← IBM VAR Channel Strategist mode
+    └── mcp.json                      ← MCP server config (ibm-data-ai-docs + m365-mcp)
 ```
 
 ---

@@ -13,6 +13,11 @@
         "fetch_ibm_doc_page",
         "fetch_ibm_case_study"
       ]
+    },
+    "m365-mcp": {
+      "command": "node",
+      "args": ["./m365-mcp/build/index.js"],
+      "disabled": false
     }
   }
 }

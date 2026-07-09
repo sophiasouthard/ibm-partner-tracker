@@ -57,7 +57,37 @@ If you get documentation results, the MCP is connected.
 
 ---
 
-## 5. Your Opportunity Data
+## 5. Microsoft 365 MCP — Live Calendar & Email (recommended)
+
+Connects Bob to your Microsoft 365 calendar and mailbox via the Graph API. When set up, Bob
+can pull your meeting log, attendee lists (with email-based org classification), and sent mail
+automatically — instead of you manually exporting and formatting them.
+
+**This replaces:**
+- Manual Outlook calendar export → CSV
+- Hand-typing attendee names
+- Guessing who is IBM vs. partner vs. customer
+
+**Setup:** See [`M365_MCP_SETUP.md`](./M365_MCP_SETUP.md) for the full walkthrough.
+
+**Summary of steps:**
+1. Go to **https://developer.microsoft.com/graph/graph-explorer**
+2. Sign in with your work Microsoft account
+3. Run the default `/me` query to force a token
+4. Copy the token from the **Access token** tab
+5. In Bob (Agent mode), say: *"update my m365 token"* and paste the token
+6. Ask Bob: *"What meetings do I have this week?"* — if you see your calendar, it works
+
+**Token refresh:** Tokens expire after ~1 hour. When you see a `401 Unauthorized` error,
+return to Graph Explorer, run `/me` again, copy the new token, and tell Bob to update it.
+
+> **Corporate tenant note:** If your organization blocks third-party OAuth apps (common on
+> IBM, large bank, or government tenants), Graph Explorer is the only pre-consented app
+> that will work. The full setup guide explains why and documents what else was tried.
+
+---
+
+## 6. Your Opportunity Data
 
 Export your active pipeline from Salesforce (or wherever your opportunities live).
 
@@ -78,11 +108,13 @@ on seeing the full picture, not just the healthy pipeline.
 
 ---
 
-## 6. Your Meeting Log (last 90 days)
+## 7. Your Meeting Log (last 90 days)
 
-A log of every significant meeting you've had related to this partner. Does not need to be
-exhaustive — focus on meetings where something happened: a demo, an enablement session,
-a customer touch, a pipeline call, an event.
+**If you have M365 MCP connected (see #5 above):** Skip the manual export. Bob will pull this
+directly from your calendar. When you reach Step 2, run the calendar prompt instead of the
+manual formatting prompt — see [`prompts/02-gather-your-data.md`](./prompts/02-gather-your-data.md).
+
+**If you don't have M365 MCP:** A log of every significant meeting related to this partner.
 
 **Minimum fields per meeting:**
 - Date
@@ -92,15 +124,18 @@ a customer touch, a pipeline call, an event.
 - Topic category (Enablement / Pipeline / Bob / Confluent / Event / Relationship / etc.)
 - Brief outcome or note
 
-**How to gather this:** Export from your calendar (Google Calendar → CSV, Outlook → Excel),
-or simply open your calendar for the last 90 days and paste the meeting titles + dates into Bob.
-Bob will help you structure them.
+**How to gather this manually:** Export from your calendar (Outlook → CSV), or open your
+calendar for the last 90 days and paste the meeting titles + dates into Bob. Bob will help
+you structure them.
 
 ---
 
-## 7. Your Email Log (key threads, last 90 days)
+## 8. Your Email Log (key threads, last 90 days)
 
-You do not need to export every email. Focus on threads where you:
+**If you have M365 MCP connected (see #5 above):** Bob can pull your sent mail directly.
+See the email pull prompt in [`prompts/02-gather-your-data.md`](./prompts/02-gather-your-data.md).
+
+**If you don't have M365 MCP:** Focus on threads where you:
 - Sent a research report or architecture assessment
 - Coordinated a demo or event
 - Introduced an IBM specialist to a partner seller
@@ -108,11 +143,10 @@ You do not need to export every email. Focus on threads where you:
 - Received an inbound inquiry from a customer via the partner
 
 **Format:** A simple list of date + subject + who it was with + one-sentence summary is enough.
-Bob will structure it into the tracker format.
 
 ---
 
-## 8. Your Quota
+## 9. Your Quota
 
 Your FY target number from your manager. This populates the Dashboard's quota progress bar.
 
@@ -121,7 +155,7 @@ note them separately.
 
 ---
 
-## 9. Partner Usage Data (optional but high-value)
+## 10. Partner Usage Data (optional but high-value)
 
 If your partner has been provisioned with any IBM tools (Bob builder seats, watsonx Orchestrate
 tenants, watsonx.ai sandboxes), try to pull:
@@ -138,7 +172,7 @@ the usage report is downloadable from the Bob admin dashboard.
 
 ---
 
-## 10. Partner Contact List
+## 11. Partner Contact List
 
 A list of your key contacts at the partner. Cards in the Contacts tab are built from this.
 
@@ -160,9 +194,10 @@ A list of your key contacts at the partner. Cards in the Contacts tab are built 
 [ ] IBM VAR Channel Strategist mode installed (.bob/custom_modes.yaml)
 [ ] Tavily MCP connected
 [ ] IBM Data & AI Docs MCP connected (recommended)
+[ ] M365 MCP connected — token in m365-mcp/token.txt (recommended, see M365_MCP_SETUP.md)
 [ ] Opportunity export ready (CSV or Excel)
-[ ] Meeting log ready (last 90 days)
-[ ] Email log ready (key threads, last 90 days)
+[ ] Meeting log ready — OR M365 MCP connected to pull live
+[ ] Email log ready — OR M365 MCP connected to pull live
 [ ] Quota number confirmed
 [ ] Partner usage data pulled (optional)
 [ ] Contact list ready
